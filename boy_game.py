@@ -6,6 +6,9 @@ SCREEN_HEIGHT = 1024
 FRAME_DELAY = 0.05
 MOVE_STEP = 5
 SPRITE_SIZE = 100
+FRAME_COUNT = 8
+IDLE_ROW_RIGHT = 300
+IDLE_ROW_LEFT = 200
 START_X = SCREEN_WIDTH // 2
 START_Y = SCREEN_HEIGHT // 2
 MOVEMENT_KEYS = (SDLK_UP, SDLK_DOWN, SDLK_LEFT, SDLK_RIGHT)
@@ -20,12 +23,15 @@ def main():
     x = START_X
     y = START_Y
     facing_right = True
+    frame = 0
 
     while running:
         clear_canvas()
         background.draw(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
-        character.clip_draw(0, 300, SPRITE_SIZE, SPRITE_SIZE, START_X, START_Y)
+        idle_row = IDLE_ROW_RIGHT if facing_right else IDLE_ROW_LEFT
+        character.clip_draw(frame * SPRITE_SIZE, idle_row, SPRITE_SIZE, SPRITE_SIZE, x, y)
         update_canvas()
+        frame = (frame + 1) % FRAME_COUNT
 
         for event in get_events():
             if event.type == SDL_QUIT:

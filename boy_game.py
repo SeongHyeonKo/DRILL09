@@ -15,7 +15,7 @@ def main():
     background = load_image('TUK_GROUND.png')
     character = load_image('animation_sheet.png')
     running = True
-    pressed_keys = set()
+    pressed_keys = []
 
     while running:
         clear_canvas()
@@ -27,9 +27,11 @@ def main():
             if event.type == SDL_QUIT:
                 running = False
             elif event.type == SDL_KEYDOWN and event.key in MOVEMENT_KEYS:
-                pressed_keys.add(event.key)
+                if event.key not in pressed_keys:
+                    pressed_keys.append(event.key)
             elif event.type == SDL_KEYUP and event.key in MOVEMENT_KEYS:
-                pressed_keys.discard(event.key)
+                if event.key in pressed_keys:
+                    pressed_keys.remove(event.key)
 
         delay(FRAME_DELAY)
 

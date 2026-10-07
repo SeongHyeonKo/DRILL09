@@ -19,6 +19,7 @@ def main():
     pressed_keys = []
     x = START_X
     y = START_Y
+    facing_right = True
 
     while running:
         clear_canvas()
@@ -44,8 +45,10 @@ def main():
                 y -= MOVE_STEP
             elif active_key == SDLK_LEFT:
                 x -= MOVE_STEP
+                facing_right = False
             elif active_key == SDLK_RIGHT:
                 x += MOVE_STEP
+                facing_right = True
 
         delay(FRAME_DELAY)
 

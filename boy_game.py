@@ -61,6 +61,9 @@ def main():
                 x += MOVE_STEP
                 facing_right = True
 
+        x = max(SPRITE_SIZE // 2, min(SCREEN_WIDTH - SPRITE_SIZE // 2, x))
+        y = max(SPRITE_SIZE // 2, min(SCREEN_HEIGHT - SPRITE_SIZE // 2, y))
+
         delay(FRAME_DELAY)
 
     close_canvas()

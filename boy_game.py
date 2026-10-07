@@ -9,6 +9,8 @@ SPRITE_SIZE = 100
 FRAME_COUNT = 8
 IDLE_ROW_RIGHT = 300
 IDLE_ROW_LEFT = 200
+RUN_ROW_RIGHT = 100
+RUN_ROW_LEFT = 0
 START_X = SCREEN_WIDTH // 2
 START_Y = SCREEN_HEIGHT // 2
 MOVEMENT_KEYS = (SDLK_UP, SDLK_DOWN, SDLK_LEFT, SDLK_RIGHT)
@@ -28,8 +30,11 @@ def main():
     while running:
         clear_canvas()
         background.draw(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
-        idle_row = IDLE_ROW_RIGHT if facing_right else IDLE_ROW_LEFT
-        character.clip_draw(frame * SPRITE_SIZE, idle_row, SPRITE_SIZE, SPRITE_SIZE, x, y)
+        if pressed_keys:
+            animation_row = RUN_ROW_RIGHT if facing_right else RUN_ROW_LEFT
+        else:
+            animation_row = IDLE_ROW_RIGHT if facing_right else IDLE_ROW_LEFT
+        character.clip_draw(frame * SPRITE_SIZE, animation_row, SPRITE_SIZE, SPRITE_SIZE, x, y)
         update_canvas()
         frame = (frame + 1) % FRAME_COUNT
 

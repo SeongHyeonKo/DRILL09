@@ -29,16 +29,6 @@ def main():
         frame = 0
 
         while running:
-            clear_canvas()
-            background.draw(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
-            if pressed_keys:
-                animation_row = RUN_ROW_RIGHT if facing_right else RUN_ROW_LEFT
-            else:
-                animation_row = IDLE_ROW_RIGHT if facing_right else IDLE_ROW_LEFT
-            character.clip_draw(frame * SPRITE_SIZE, animation_row, SPRITE_SIZE, SPRITE_SIZE, x, y)
-            update_canvas()
-            frame = (frame + 1) % FRAME_COUNT
-
             for event in get_events():
                 if event.type == SDL_QUIT:
                     running = False
@@ -50,6 +40,9 @@ def main():
                 elif event.type == SDL_KEYUP and event.key in MOVEMENT_KEYS:
                     if event.key in pressed_keys:
                         pressed_keys.remove(event.key)
+
+            if not running:
+                break
 
             if pressed_keys:
                 active_key = pressed_keys[0]
@@ -66,6 +59,16 @@ def main():
 
             x = max(SPRITE_SIZE // 2, min(SCREEN_WIDTH - SPRITE_SIZE // 2, x))
             y = max(SPRITE_SIZE // 2, min(SCREEN_HEIGHT - SPRITE_SIZE // 2, y))
+
+            clear_canvas()
+            background.draw(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+            if pressed_keys:
+                animation_row = RUN_ROW_RIGHT if facing_right else RUN_ROW_LEFT
+            else:
+                animation_row = IDLE_ROW_RIGHT if facing_right else IDLE_ROW_LEFT
+            character.clip_draw(frame * SPRITE_SIZE, animation_row, SPRITE_SIZE, SPRITE_SIZE, x, y)
+            update_canvas()
+            frame = (frame + 1) % FRAME_COUNT
 
             delay(FRAME_DELAY)
     finally:

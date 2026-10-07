@@ -4,6 +4,7 @@ from pico2d import *
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 1024
 FRAME_DELAY = 0.05
+MOVE_STEP = 5
 SPRITE_SIZE = 100
 START_X = SCREEN_WIDTH // 2
 START_Y = SCREEN_HEIGHT // 2
@@ -16,6 +17,8 @@ def main():
     character = load_image('animation_sheet.png')
     running = True
     pressed_keys = []
+    x = START_X
+    y = START_Y
 
     while running:
         clear_canvas()
@@ -32,6 +35,17 @@ def main():
             elif event.type == SDL_KEYUP and event.key in MOVEMENT_KEYS:
                 if event.key in pressed_keys:
                     pressed_keys.remove(event.key)
+
+        if pressed_keys:
+            active_key = pressed_keys[0]
+            if active_key == SDLK_UP:
+                y += MOVE_STEP
+            elif active_key == SDLK_DOWN:
+                y -= MOVE_STEP
+            elif active_key == SDLK_LEFT:
+                x -= MOVE_STEP
+            elif active_key == SDLK_RIGHT:
+                x += MOVE_STEP
 
         delay(FRAME_DELAY)
 

@@ -7,6 +7,7 @@ FRAME_DELAY = 0.05
 SPRITE_SIZE = 100
 START_X = SCREEN_WIDTH // 2
 START_Y = SCREEN_HEIGHT // 2
+MOVEMENT_KEYS = (SDLK_UP, SDLK_DOWN, SDLK_LEFT, SDLK_RIGHT)
 
 
 def main():
@@ -14,6 +15,7 @@ def main():
     background = load_image('TUK_GROUND.png')
     character = load_image('animation_sheet.png')
     running = True
+    pressed_keys = set()
 
     while running:
         clear_canvas()
@@ -24,6 +26,10 @@ def main():
         for event in get_events():
             if event.type == SDL_QUIT:
                 running = False
+            elif event.type == SDL_KEYDOWN and event.key in MOVEMENT_KEYS:
+                pressed_keys.add(event.key)
+            elif event.type == SDL_KEYUP and event.key in MOVEMENT_KEYS:
+                pressed_keys.discard(event.key)
 
         delay(FRAME_DELAY)
 
